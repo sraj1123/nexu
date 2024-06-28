@@ -97,7 +97,8 @@ pipeline {
         stage('Read app.properties') {
             steps {
                 script {
-                    echo "Value for $key is: $Extract_URL"
+                    // echo "Value for $key is: $Extract_URL"
+                    echo "Hello world from here"
                 }
             }
         }
@@ -107,7 +108,7 @@ pipeline {
                 label 'ubuntu-server' // Assuming 'ubuntu-server' is the label for your second VM node
             }
             steps {
-                sh 'echo "Hello from Node-VM2"'
+                echo "Value for $key is: $Extract_URL"
                 // Add more steps as needed for your pipeline on the ubuntu-server node
             }
         }
