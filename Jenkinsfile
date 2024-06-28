@@ -84,20 +84,18 @@
 
 pipeline {
     agent {
-        label 'built-in' // Assuming 'built-in' is a label for the Jenkins master or another agent with appropriate permissions
+        label 'built-in'
     }
     
     environment {
-        def propertiesFile = '/home/ubuntu/prime-square/application.properties'
-        def key = 'base.ui.url'
-        Extract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
+        
+        Extract_URL = ''
     }
     
     stages {
         stage('Read app.properties') {
             steps {
                 script {
-                    // echo "Value for $key is: $Extract_URL"
                     echo "Hello world from here"
                 }
             }
@@ -105,11 +103,14 @@ pipeline {
         
         stage('Example Stage') {
             agent {
-                label 'ubuntu-server' // Assuming 'ubuntu-server' is the label for your second VM node
+                label 'ubuntu-server'
             }
             steps {
+                def propertiesFile = '/home/ubuntu/prime-square/application.properties'
+                def key = 'base.ui.url'
+                sExtract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
                 echo "Value for $key is: $Extract_URL"
-                // Add more steps as needed for your pipeline on the ubuntu-server node
+                
             }
         }
     }
