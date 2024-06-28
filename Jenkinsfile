@@ -88,8 +88,9 @@ pipeline {
     }
     
     environment {
-        
         Extract_URL = ''
+        propertiesFile = '/home/ubuntu2/prime-square/application.properties'
+        key = 'base.ui.url'
     }
     
     stages {
@@ -106,11 +107,11 @@ pipeline {
                 label 'ubuntu-server'
             }
             steps {
-                def propertiesFile = '/home/ubuntu2/prime-square/application.properties'
-                def key = 'base.ui.url'
-                Extract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
-                echo "Value for $key is: $Extract_URL"
-                
+                script {
+                    // Read and extract the value from application.properties
+                    Extract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
+                    echo "Value for $key is: $Extract_URL"
+                }
             }
         }
     }
