@@ -27,18 +27,69 @@
 
 
 
+// pipeline {
+//     agent{
+//         label 'built-in'
+//     }
+    
+//     environment {
+//        // Define the path to your app.properties file
+//        def propertiesFile = '/home/ubuntu/prime-square/application.properties'
+                    
+//         // Key you want to extract
+//         def key = 'base.ui.url'
+//         // Initialize Extract_URL as an empty string
+//         Extract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
+//     }
+    
+//     stages {
+//         stage('Read app.properties') {
+//             steps {
+//                 script {
+//                     // // Define the path to your app.properties file
+//                     // def propertiesFile = '/home/ubuntu/prime-square/application.properties'
+                    
+//                     // // Key you want to extract
+//                     // def key = 'base.ui.url'
+                    
+//                     // // Read the properties file and extract value for the key
+//                     // value = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
+                    
+//                     // // Assign the extracted value to Extract_URL environment variable
+//                     // env.Extract_URL = value
+                    
+//                     // Display the value on the Jenkins console
+//                     echo "Value for $key is: $env.Extract_URL"
+//                 }
+//             }
+//         }
+//     }
+
+
+//      agent {
+//         label 'ubuntu-server'  // Use the label assigned to the node
+//     }
+    
+//     stages {
+//         stage('Example Stage') {
+//             steps {
+//                 // Define your pipeline steps here
+//                 sh 'echo "Hello from Node-VM2"'
+//             }
+//         }
+//     }
+// }
+
+
+
 pipeline {
-    agent{
-        label 'built-in'
+    agent {
+        label 'built-in' // Assuming 'built-in' is a label for the Jenkins master or another agent with appropriate permissions
     }
     
     environment {
-       // Define the path to your app.properties file
-       def propertiesFile = '/home/ubuntu/prime-square/application.properties'
-                    
-        // Key you want to extract
+        def propertiesFile = '/home/ubuntu/prime-square/application.properties'
         def key = 'base.ui.url'
-        // Initialize Extract_URL as an empty string
         Extract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
     }
     
@@ -46,35 +97,18 @@ pipeline {
         stage('Read app.properties') {
             steps {
                 script {
-                    // // Define the path to your app.properties file
-                    // def propertiesFile = '/home/ubuntu/prime-square/application.properties'
-                    
-                    // // Key you want to extract
-                    // def key = 'base.ui.url'
-                    
-                    // // Read the properties file and extract value for the key
-                    // value = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
-                    
-                    // // Assign the extracted value to Extract_URL environment variable
-                    // env.Extract_URL = value
-                    
-                    // Display the value on the Jenkins console
-                    echo "Value for $key is: $env.Extract_URL"
+                    echo "Value for $key is: $Extract_URL"
                 }
             }
         }
-    }
-
-
-     agent {
-        label 'ubuntu-server'  // Use the label assigned to the node
-    }
-    
-    stages {
+        
         stage('Example Stage') {
+            agent {
+                label 'ubuntu-server' // Assuming 'ubuntu-server' is the label for your second VM node
+            }
             steps {
-                // Define your pipeline steps here
                 sh 'echo "Hello from Node-VM2"'
+                // Add more steps as needed for your pipeline on the ubuntu-server node
             }
         }
     }
