@@ -28,7 +28,9 @@
 
 
 pipeline {
-    agent any
+    agent{
+        label 'built-in'
+    }
     
     environment {
        // Define the path to your app.properties file
@@ -59,6 +61,20 @@ pipeline {
                     // Display the value on the Jenkins console
                     echo "Value for $key is: $env.Extract_URL"
                 }
+            }
+        }
+    }
+
+
+     agent {
+        label 'ubuntu-server'  // Use the label assigned to the node
+    }
+    
+    stages {
+        stage('Example Stage') {
+            steps {
+                // Define your pipeline steps here
+                sh 'echo "Hello from Node-VM2"'
             }
         }
     }
