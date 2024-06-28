@@ -89,7 +89,7 @@ pipeline {
     
     environment {
         Extract_URL = ''
-        propertiesFile = '/home/ubuntu2/prime-square/application.properties'
+        propertiesFile = '/home/ubuntu/prime-square/application.properties'
         key = 'base.ui.url'
     }
     
