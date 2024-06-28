@@ -106,7 +106,7 @@ pipeline {
                 label 'ubuntu-server'
             }
             steps {
-                def propertiesFile = '/home/ubuntu/prime-square/application.properties'
+                def propertiesFile = '/home/ubuntu2/prime-square/application.properties'
                 def key = 'base.ui.url'
                 sExtract_URL = sh(script: "sudo grep '^$key=' $propertiesFile | cut -d'=' -f2-", returnStdout: true).trim()
                 echo "Value for $key is: $Extract_URL"
